@@ -3,36 +3,50 @@ const Tag    = new Date().getDate(),
       width  = 800,
       height = 526
 
-let tagAktiv = -1
-
-document.addEventListener('mousedown', clicked)
-
-let ctx, can,
+let tagAktiv = -1,
+    jingle,
+    ctx, can,
     doors = [], 
     images = []
+document.addEventListener('mousedown', clicked)
 
 window.onload = function() {
+  window.addEventListener('dblclick', e => {
+    e.preventDefault()})
+
   can = document.getElementById('C')
   ctx = can.getContext('2d')
 
   for (let i = 0; i < 24; i++)
     doors.push(new Door(i))
   
-    images[0] = new Image()
-    images[0].src = './rsc/Kalender.jpg'
+  jingle = new Audio()
+  jingle.src = './rsc/Jingle.wav'
 
-    images[1] = new Image()
-    images[1].src = './rsc/Rahmen.jpg'
-  
-    setTimeout(show, 600)
+  loadImages()
+}
+
+function loadImages(i = 0) {
+  images[i] = new Image()
+  images[i].src = ['./rsc/Kalender.jpg', './rsc/Rahmen.jpg'][i]
+  images[i].addEventListener('load', i < 1 ? loadImages(++i) : show)
 }
 
 function show() {
-  ctx.drawImage(images[0], 0, 0)
+  ctx.drawImage(images[0], 0 , 0)
+
   if (tagAktiv != -1) {
-    ctx.drawImage(images[1], 0, 0)
-  }
+    jingle.play()
+    let i = 0
+    let interval = setInterval(_ => {
+      if (i >= 50)
+        clearInterval(interval)
+    ctx.drawImage(images[1], 400 - i * 8, 263 - i * 5.25, i * 16, i * 10.52)
+    i++
+    }, 20)
+  }    
 }
+
 
 function rect(x, y, w, h, col) {
   ctx.fillStyle = col
@@ -44,7 +58,7 @@ function clicked(event) {
       elemRect = can.getBoundingClientRect(),
       x = Math.floor((event.clientX - elemRect.left - bodyRect.left) / width * 6)
       y = Math.floor((event.clientY - elemRect.top -  bodyRect.top) / height * 4)
-
+    console.log(event.clientX, event.clientY)
   if (x < 0 || x > 5 || y < 0 || y > 3)
     return
 
