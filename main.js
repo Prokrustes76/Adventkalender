@@ -24,7 +24,7 @@ window.onload = function() {
     images[1] = new Image()
     images[1].src = './rsc/Rahmen.jpg'
   
-    setTimeout(show, 200)
+    setTimeout(show, 600)
 }
 
 function show() {
