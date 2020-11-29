@@ -4,10 +4,15 @@ const Tag    = new Date().getDate(),
       height = 526
 
 let tagAktiv = -1,
+    currentImage,
+    currentAudio,
     jingle,
     ctx, can,
     doors = [], 
-    images = []
+    images = [],
+    audios = []
+
+
 document.addEventListener('mousedown', clicked)
 
 window.onload = function() {
@@ -19,16 +24,24 @@ window.onload = function() {
 
   for (let i = 0; i < 24; i++)
     doors.push(new Door(i))
-  
-  jingle = new Audio()
-  jingle.src = './rsc/Jingle.wav'
 
-  loadImages()
+  loadStuff()
 }
+
+function loadStuff() {
+  loadAudios()
+}
+
+function loadAudios(i = 0) {
+  audios[i] = new Audio()
+  audios[i].src = ['./rsc/Jingle.wav']
+  audios[i].addEventListener('load', i < 0 ? loadAudios(++i) : loadImages())
+} 
 
 function loadImages(i = 0) {
   images[i] = new Image()
-  images[i].src = ['./rsc/Kalender.jpg', './rsc/Rahmen.jpg'][i]
+  images[i].src = ['./rsc/Kalender.jpg', 
+                   './rsc/Rahmen.png'][i]
   images[i].addEventListener('load', i < 1 ? loadImages(++i) : show)
 }
 
@@ -36,15 +49,30 @@ function show() {
   ctx.drawImage(images[0], 0 , 0)
 
   if (tagAktiv != -1) {
-    jingle.play()
+    audios[0].play()
     let i = 0
     let interval = setInterval(_ => {
-      if (i >= 100)
+      if (i >= 100) 
         clearInterval(interval)
-    ctx.drawImage(images[1], 400 - i * 4, 263 - i * 2.63, i * 8, i * 5.26)
+
+      let w = 8 * i
+      let h = 5.26 * i
+ 
+    rect(width/2 - w/2, height/2 - h/2, w, h, 'white')
+    if (currentImage)
+      ctx.drawImage(currentImage, width/2 - w/3, height/2 - h/3.5, w*.6667, h*.6667)
+    ctx.drawImage(images[1], width/2 - w/2, height/2 - h/2, w, h)
     i++
+    if (i > 99)
+      showContent()
     }, 17)
   }    
+}
+
+function showContent() {
+  if (currentAudio)
+    currentAudio.play()
+  
 }
 
 
@@ -72,6 +100,24 @@ class Door {
                15, 16, 17, 18, 19,  2,
                20, 21, 22, 23, 24,  3, 
                 4,  5,  6,  7,  8,  9][i]
+    this.audio = this.getAudio() || undefined
+    this.image = this.getImage() || undefined
+  }
+
+  getAudio() {
+    if ([1].includes(this.id)) {
+      let audio = new Audio()
+      audio.src = `./rsc/Audio${this.id}.mp3`
+      return audio
+    }
+  }
+
+  getImage() {
+    if ([1].includes(this.id)) {
+      let image = new Image()
+      image.src = `./rsc/Jpg${this.id}.jpg`
+      return image
+    }
   }
 
   clicked() {
@@ -89,10 +135,16 @@ class Door {
 
   open() {
     tagAktiv = this.id
+    currentImage = this.image 
+    currentAudio = this.audio
   }
 
   close() {
-    tagAktiv = -1
+    tagAktiv  = -1
+    currentAudio.pause()
+    currentAudio.currentTime = 0
+    currentImage   = undefined
+    currentAudio   = undefined
   }
 }
 
