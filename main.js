@@ -39,11 +39,11 @@ function show() {
     jingle.play()
     let i = 0
     let interval = setInterval(_ => {
-      if (i >= 50)
+      if (i >= 100)
         clearInterval(interval)
-    ctx.drawImage(images[1], 400 - i * 8, 263 - i * 5.25, i * 16, i * 10.52)
+    ctx.drawImage(images[1], 400 - i * 4, 263 - i * 2.63, i * 8, i * 5.26)
     i++
-    }, 20)
+    }, 17)
   }    
 }
 
@@ -56,6 +56,7 @@ function rect(x, y, w, h, col) {
 function clicked(event) {
   let bodyRect = document.body.getBoundingClientRect(),
       elemRect = can.getBoundingClientRect(),
+
       x = Math.floor((event.clientX - elemRect.left - bodyRect.left) / width * 6)
       y = Math.floor((event.clientY - elemRect.top -  bodyRect.top) / height * 4)
     console.log(event.clientX, event.clientY)
