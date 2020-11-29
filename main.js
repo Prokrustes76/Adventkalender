@@ -1,19 +1,31 @@
-const Tag    = new Date().getDate(),
-      Monat  = new Date().getMonth(),
-      width  = 800,
-      height = 526
-
-let tagAktiv = -1,
+let Tag    = new Date().getDate(),
+    Monat  = new Date().getMonth(),
+    width  = 800,
+    height = 526,
+    tagAktiv = -1,
     currentImage,
     currentAudio,
+    currentVideo,
     jingle,
-    ctx, can,
+    can, 
+    ctx,
     doors = [], 
     images = [],
-    audios = []
+    audios = [],
+    video,
+    button
+    done = [2, 3, 4, 7, 21]
 
 
 document.addEventListener('mousedown', clicked)
+document.addEventListener('keydown', keyPressed)
+
+function keyPressed(e) {
+  if (e.keyCode != 81)
+    return
+  Tag   = 30
+  Monat = 11
+}
 
 window.onload = function() {
   window.addEventListener('dblclick', e => {
@@ -21,6 +33,8 @@ window.onload = function() {
 
   can = document.getElementById('C')
   ctx = can.getContext('2d')
+  video = document.getElementById('Vid')
+  button = document.getElementById('Zurueck')
 
   for (let i = 0; i < 24; i++)
     doors.push(new Door(i))
@@ -35,6 +49,7 @@ function loadStuff() {
 function loadAudios(i = 0) {
   audios[i] = new Audio()
   audios[i].src = ['./rsc/Jingle.wav']
+  audios[i].volume = .3
   audios[i].addEventListener('load', i < 0 ? loadAudios(++i) : loadImages())
 } 
 
@@ -48,7 +63,7 @@ function loadImages(i = 0) {
 function show() {
   ctx.drawImage(images[0], 0 , 0)
 
-  if (tagAktiv != -1) {
+  if (tagAktiv != -1 && !currentVideo) {
     audios[0].play()
     let i = 0
     let interval = setInterval(_ => {
@@ -75,7 +90,6 @@ function showContent() {
   
 }
 
-
 function rect(x, y, w, h, col) {
   ctx.fillStyle = col
   ctx.fillRect(x, y, w, h)
@@ -85,13 +99,17 @@ function clicked(event) {
   let bodyRect = document.body.getBoundingClientRect(),
       elemRect = can.getBoundingClientRect(),
 
-      x = Math.floor((event.clientX - elemRect.left - bodyRect.left) / width * 6)
-      y = Math.floor((event.clientY - elemRect.top -  bodyRect.top) / height * 4)
-    console.log(event.clientX, event.clientY)
+  x = Math.floor((event.clientX - elemRect.left - bodyRect.left) / width * 6)
+  y = Math.floor((event.clientY - elemRect.top -  bodyRect.top) / height * 4)
+
   if (x < 0 || x > 5 || y < 0 || y > 3)
     return
 
   doors[y * 6 + x].clicked() 
+}
+
+function zurueck() {
+  doors[tagAktiv - 1].close()
 }
 
 class Door {
@@ -104,27 +122,32 @@ class Door {
     this.image = this.getImage() || undefined
   }
 
+  static hasVideo = [3, 4, 21]
+
   getAudio() {
-    if ([1].includes(this.id)) {
-      let audio = new Audio()
-      audio.src = `./rsc/Audio${this.id}.mp3`
-      return audio
-    }
+    if (![2, 7].includes(this.id))
+      return
+    let audio = new Audio()
+    audio.src = `./rsc/Audio${this.id}.mp3` 
+    return audio
   }
 
   getImage() {
-    if ([1].includes(this.id)) {
-      let image = new Image()
-      image.src = `./rsc/Jpg${this.id}.jpg`
-      return image
-    }
+    if (![2, 7].includes(this.id))
+      return
+    let image = new Image()
+    image.src = `./rsc/Jpg${this.id}.jpg` 
+    return image
   }
 
   clicked() {
     if (tagAktiv > -1)
       this.close()
 
-    else if (this.id > 1 || Monat != 10)
+    else if (!done.includes(this.id))
+      return 
+
+    else if (this.id > Tag || Monat != 11)
       return
 
     else if (tagAktiv == -1)
@@ -135,16 +158,39 @@ class Door {
 
   open() {
     tagAktiv = this.id
-    currentImage = this.image 
-    currentAudio = this.audio
+
+    if (Door.hasVideo.includes(this.id)) {
+      let url = this.id ==  3 ? 'https://www.youtube.com/embed/rEvnp_9DTYM' : 
+                this.id ==  4 ? 'https://www.youtube.com/embed/DP_90vWFOLQ' : 
+                this.id == 21 ? 'https://www.youtube.com/embed/n3z3EeBDxkE' : undefined
+      video.setAttribute('src', url)
+      video.style.display = 'block'
+      button.style.display = 'block'
+      currentVideo = this.id
+    }
+
+    else {
+      currentImage = this.image 
+      currentAudio = this.audio
+    }
   }
 
   close() {
-    tagAktiv  = -1
-    currentAudio.pause()
-    currentAudio.currentTime = 0
-    currentImage   = undefined
-    currentAudio   = undefined
+
+    if (currentAudio) {
+      currentAudio.pause()
+      currentAudio.currentTime = 0
+    }
+
+    if (currentVideo) 
+      video.src = undefined
+    
+    tagAktiv             = -1
+    currentImage         = undefined
+    currentAudio         = undefined
+    currentVideo         = undefined
+    video.style.display  = 'none'
+    button.style.display = 'none'
   }
 }
 

@@ -7,7 +7,7 @@
 
   <style>
     
-    * {
+    body {
       margin: 0px;
       padding: 0px;
       background: black
@@ -20,13 +20,30 @@
     }
 
     #wrapper {
-    text-align: center;
-    width: 800px;
-    height: 650px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+      text-align: center;
+      width: 800px;
+      height: 650px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .video {
+      display: none;
+      width: 800px;
+      height: 620px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #Zurueck {
+      display: none;
+      background-color: green;
+      font-size: 25px;
+      margin: -15px auto;
     }
 
   </style>
@@ -35,6 +52,8 @@
   <div id='wrapper'>
     <h1>Aventskalender Duisburg</h1>
     <canvas id='C' width='800' height='600'></canvas>
+    <iframe class='video' id='Vid' width="800" height="526" frameborder="0" src='' allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <button id ='Zurueck' onclick='zurueck()'>Zurück zum Kalender</button>
   </div>
   <script src='main.js'></script>
 </body>
