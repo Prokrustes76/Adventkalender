@@ -6,6 +6,7 @@ let Tag    = new Date().getDate(),
     currentImage,
     currentAudio,
     currentVideo,
+    extraMessage,
     jingle,
     can, 
     ctx,
@@ -14,7 +15,7 @@ let Tag    = new Date().getDate(),
     audios = [],
     video,
     button
-    done = [2, 3, 4, 7, 21]
+    done = [1, 2, 3, 4, 7, 21]
 
 
 document.addEventListener('mousedown', clicked)
@@ -35,6 +36,7 @@ window.onload = function() {
   ctx = can.getContext('2d')
   video = document.getElementById('Vid')
   button = document.getElementById('Zurueck')
+  extraMessage = document.getElementById('extraMessage')
 
   for (let i = 0; i < 24; i++)
     doors.push(new Door(i))
@@ -44,13 +46,13 @@ window.onload = function() {
 
 function loadStuff() {
   loadAudios()
+  loadImages() // als Promise: Im Anschluss folgt show()
 }
 
 function loadAudios(i = 0) {
   audios[i] = new Audio()
   audios[i].src = ['./rsc/Jingle.wav']
   audios[i].volume = .3
-  audios[i].addEventListener('load', i < 0 ? loadAudios(++i) : loadImages())
 } 
 
 function loadImages(i = 0) {
@@ -63,19 +65,23 @@ function loadImages(i = 0) {
 function show() {
   ctx.drawImage(images[0], 0 , 0)
 
-  if (tagAktiv != -1 && !currentVideo) {
+  if (tagAktiv != -1 && !currentVideo) {    
     audios[0].play()
     let i = 0
     let interval = setInterval(_ => {
-      if (i >= 100) 
-        clearInterval(interval)
+      let anzahl = tagAktiv == 1 ? 160 : 100    // Tag 1 Rezepte, stärkerer
+      if (i >= anzahl)                          // Zoom erforderlich
+        clearInterval(interval)   
 
       let w = 8 * i
       let h = 5.26 * i
  
     rect(width/2 - w/2, height/2 - h/2, w, h, 'white')
-    if (currentImage)
-      ctx.drawImage(currentImage, width/2 - w/3, height/2 - h/3.5, w*.6667, h*.6667)
+    if (currentImage) {
+      let hoehe = tagAktiv == 1 ? h / 3 : h / 3.5   // wegen Rezepte (s.o.)
+      ctx.drawImage(currentImage, width/2 - w/3, height/2 - hoehe, w*.6667, h*.6667)
+    }
+    if ((tagAktiv == 1 && i < 150) || i < 110)
     ctx.drawImage(images[1], width/2 - w/2, height/2 - h/2, w, h)
     i++
     if (i > 99)
@@ -87,7 +93,8 @@ function show() {
 function showContent() {
   if (currentAudio)
     currentAudio.play()
-  
+  if (tagAktiv == 1)
+    extraMessage.style.display = 'block'
 }
 
 function rect(x, y, w, h, col) {
@@ -111,89 +118,3 @@ function clicked(event) {
 function zurueck() {
   doors[tagAktiv - 1].close()
 }
-
-class Door {
-  constructor(i) {
-    this.id = [ 1, 10, 11, 12, 13, 14,
-               15, 16, 17, 18, 19,  2,
-               20, 21, 22, 23, 24,  3, 
-                4,  5,  6,  7,  8,  9][i]
-    this.audio = this.getAudio() || undefined
-    this.image = this.getImage() || undefined
-  }
-
-  static hasVideo = [3, 4, 21]
-
-  getAudio() {
-    if (![2, 7].includes(this.id))
-      return
-    let audio = new Audio()
-    audio.src = `./rsc/Audio${this.id}.mp3` 
-    return audio
-  }
-
-  getImage() {
-    if (![2, 7].includes(this.id))
-      return
-    let image = new Image()
-    image.src = `./rsc/Jpg${this.id}.jpg` 
-    return image
-  }
-
-  clicked() {
-    if (tagAktiv > -1)
-      this.close()
-
-    else if (!done.includes(this.id))
-      return 
-
-    else if (this.id > Tag || Monat != 11)
-      return
-
-    else if (tagAktiv == -1)
-      this.open()
-
-    show()
-  }
-
-  open() {
-    tagAktiv = this.id
-
-    if (Door.hasVideo.includes(this.id)) {
-      let url = this.id ==  3 ? 'https://www.youtube.com/embed/rEvnp_9DTYM' : 
-                this.id ==  4 ? 'https://www.youtube.com/embed/DP_90vWFOLQ' : 
-                this.id == 21 ? 'https://www.youtube.com/embed/n3z3EeBDxkE' : undefined
-      video.setAttribute('src', url)
-      video.style.display = 'block'
-      button.style.display = 'block'
-      currentVideo = this.id
-    }
-
-    else {
-      currentImage = this.image 
-      currentAudio = this.audio
-    }
-  }
-
-  close() {
-
-    if (currentAudio) {
-      currentAudio.pause()
-      currentAudio.currentTime = 0
-    }
-
-    if (currentVideo) 
-      video.src = undefined
-    
-    tagAktiv             = -1
-    currentImage         = undefined
-    currentAudio         = undefined
-    currentVideo         = undefined
-    video.style.display  = 'none'
-    button.style.display = 'none'
-  }
-}
-
-
-
-
