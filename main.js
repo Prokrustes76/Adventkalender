@@ -55,11 +55,12 @@ function loadAudios(i = 0) {
   audios[i].volume = .3
 } 
 
-function loadImages(i = 0) {
-  images[i] = new Image()
-  images[i].src = ['./rsc/Kalender.jpg', 
-                   './rsc/Rahmen.png'][i]
-  images[i].addEventListener('load', i < 1 ? loadImages(++i) : show)
+function loadImages() {
+  images[1] = new Image()
+  images[1].src = './rsc/Rahmen.png'
+  images[0] = new Image()
+  images[0].src = './rsc/Kalender.jpg'
+  images[0].addEventListener('load', show)
 }
 
 function show() {
