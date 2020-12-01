@@ -8,10 +8,10 @@ class Door {
     this.image = this.getImage() || undefined
   }
 
-  static hasVideo = [3, 4, 21]
+  static hasVideo = [3, 4, 16, 21]
 
   getAudio() {
-    if (![1, 2, 7].includes(this.id))
+    if (![1, 2, 7, 8, 9].includes(this.id))
       return
     let audio = new Audio()
     audio.src = `./rsc/Audio${this.id}.mp3` 
@@ -19,7 +19,7 @@ class Door {
   }
 
   getImage() {
-    if (![1, 2, 7].includes(this.id))
+    if (![1, 2, 7, 9].includes(this.id))
       return
     let image = new Image()
     image.src = `./rsc/Jpg${this.id}.jpg` 
@@ -48,6 +48,7 @@ class Door {
     if (Door.hasVideo.includes(this.id)) {
       let url = this.id ==  3 ? 'https://www.youtube.com/embed/rEvnp_9DTYM' : 
                 this.id ==  4 ? 'https://www.youtube.com/embed/DP_90vWFOLQ' : 
+                this.id == 16 ? 'https://www.youtube.com/embed/yJa9mCt6Np0' :
                 this.id == 21 ? 'https://www.youtube.com/embed/n3z3EeBDxkE' : undefined
       video.setAttribute('src', url)
       video.style.display = 'block'

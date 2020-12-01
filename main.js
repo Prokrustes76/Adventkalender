@@ -14,8 +14,8 @@ let Tag    = new Date().getDate(),
     images = [],
     audios = [],
     video,
-    button
-    done = [1, 2, 3, 4, 7, 21]
+    button,
+    done = [1, 2, 3, 4, 7, 9, 16, 21]
 
 
 document.addEventListener('mousedown', clicked)
@@ -55,9 +55,10 @@ function loadAudios(i = 0) {
   audios[i].volume = .3
 } 
 
-function loadImages() {
+function loadImages(i = 0) {
   images[1] = new Image()
   images[1].src = './rsc/Rahmen.png'
+
   images[0] = new Image()
   images[0].src = './rsc/Kalender.jpg'
   images[0].addEventListener('load', show)
@@ -96,6 +97,7 @@ function showContent() {
     currentAudio.play()
   if (tagAktiv == 1)
     extraMessage.style.display = 'block'
+
 }
 
 function rect(x, y, w, h, col) {
