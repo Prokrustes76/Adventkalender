@@ -10,20 +10,25 @@ class Door {
 
   static hasVideo = [3, 4, 7, 16, 21]
   static done = [1, 2, 3, 4, 7, 9, 10, 16, 21]
+  static noContent = [5, 6, 12, 13, 19, 20]
 
-  getAudio() {
-    if (![1, 2, 8, 9, 10].includes(this.id))
+  getAudio() {      
+    if (![...Door.noContent,...[1, 2, 8, 9, 10]].includes(this.id))
       return
     let audio = new Audio()
-    audio.src = `./rsc/Audio${this.id}.mp3` 
+    audio.src = Door.noContent.includes(this.id) ? 
+      `./rsc/Sleeping.mp3` :
+      `./rsc/Audio${this.id}.mp3`
     return audio
   }
 
   getImage() {
-    if (![1, 2, 9, 10].includes(this.id))
+    if (![...Door.noContent,...[1, 2, 9, 10]].includes(this.id))
       return
     let image = new Image()
-    image.src = `./rsc/Jpg${this.id}.jpg` 
+    image.src = Door.noContent.includes(this.id) ? 
+      `./rsc/Sleeping0${Door.noContent.indexOf(this.id) % 3}.jpg` :
+      `./rsc/Jpg${this.id}.jpg` 
     return image
   }
 
@@ -31,7 +36,7 @@ class Door {
     if (tagAktiv > -1)
       this.close()
 
-    else if (!Door.done.includes(this.id))
+    else if (![...Door.done,...Door.noContent].includes(this.id))
       return 
 
     else if (this.id > Tag || Monat != 11)

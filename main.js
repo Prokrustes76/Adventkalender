@@ -66,22 +66,24 @@ function show() {
   ctx.drawImage(images[0], 0 , 0)
 
   if (tagAktiv != -1 && !currentVideo) {    
-    audios[0].play()
+    if  (!Door.noContent.includes(tagAktiv))
+      audios[0].play()
+    let bigger = [...Door.noContent,...[1]].includes(tagAktiv)
     let i = 0
     let interval = setInterval(_ => {
-      let anzahl = tagAktiv == 1 ? 160 : 100    // Tag 1 Rezepte, stärkerer
-      if (i >= anzahl)                          // Zoom erforderlich
+      let anzahl = bigger ? 160 : 100    // Tag 1 & noContent, stärkerer
+      if (i >= anzahl)                   // Zoom erforderlich
         clearInterval(interval)   
 
       let w = 8 * i
       let h = 5.26 * i
  
-    rect(width/2 - w/2, height/2 - h/2, w, h, 'white')
+    rect(width/2 - w/2, height/2 - h/2, w, h, Door.noContent.includes(tagAktiv) ? 'black' : 'white')
     if (currentImage) {
-      let hoehe = tagAktiv == 1 ? h / 3 : h / 3.5   // wegen Rezepte (s.o.)
+      let hoehe = bigger ? h / 3 : h / 3.5   // wegen Rezepte (s.o.)
       ctx.drawImage(currentImage, width/2 - w/3, height/2 - hoehe, w*.6667, h*.6667)
     }
-    if ((tagAktiv == 1 && i < 150) || i < 110)
+    if (((bigger && i < 150) || i < 110) && !Door.noContent.includes(tagAktiv))
     ctx.drawImage(images[1], width/2 - w/2, height/2 - h/2, w, h)
     i++
     if (i > 99)
@@ -95,6 +97,11 @@ function showContent() {
     currentAudio.play()
   if (tagAktiv == 1)
     extraMessage.style.display = 'block'
+  if (Door.noContent.includes(tagAktiv)) {
+    extraMessage.style.display = 'block'
+    extraMessage.innerHTML = '<h2>Heute ruhe ich mich aus!<h2>'
+    extraMessage.style.color = 'silver'
+  }
 
 }
 
