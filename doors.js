@@ -8,10 +8,11 @@ class Door {
     this.image = this.getImage() || undefined
   }
 
-  static hasVideo = [3, 4, 16, 21]
+  static hasVideo = [3, 4, 7, 16, 21]
+  static done = [1, 2, 3, 4, 7, 9, 10, 16, 21]
 
   getAudio() {
-    if (![1, 2, 7, 8, 9].includes(this.id))
+    if (![1, 2, 8, 9, 10].includes(this.id))
       return
     let audio = new Audio()
     audio.src = `./rsc/Audio${this.id}.mp3` 
@@ -19,7 +20,7 @@ class Door {
   }
 
   getImage() {
-    if (![1, 2, 7, 9].includes(this.id))
+    if (![1, 2, 9, 10].includes(this.id))
       return
     let image = new Image()
     image.src = `./rsc/Jpg${this.id}.jpg` 
@@ -30,7 +31,7 @@ class Door {
     if (tagAktiv > -1)
       this.close()
 
-    else if (!done.includes(this.id))
+    else if (!Door.done.includes(this.id))
       return 
 
     else if (this.id > Tag || Monat != 11)
@@ -46,8 +47,9 @@ class Door {
     tagAktiv = this.id
 
     if (Door.hasVideo.includes(this.id)) {
-      let url = this.id ==  3 ? 'https://www.youtube-nocookie.com/embed/rEvnp_9DTYM?modestbranding=1' : 
-                this.id ==  4 ? 'https://www.youtube-nocookie.com/embed/DP_90vWFOLQ?modestbranding=1' : 
+      let url = this.id ==  3 ? 'https://www.youtube-nocookie.com/embed/WCfIiaaYtKA?modestbranding=1' :
+                this.id ==  7 ? 'https://www.youtube-nocookie.com/embed/rEvnp_9DTYM?modestbranding=1' : 
+                this.id ==  4 ? 'https://www.youtube-nocookie.com/embed/DP_90vWFOLQ?modestbranding=1' :    
                 this.id == 16 ? 'https://www.youtube-nocookie.com/embed/yJa9mCt6Np0?modestbranding=1' :
                 this.id == 21 ? 'https://www.youtube-nocookie.com/embed/n3z3EeBDxkE?modestbranding=1' : undefined
       video.setAttribute('src', url)

@@ -14,9 +14,7 @@ let Tag    = new Date().getDate(),
     images = [],
     audios = [],
     video,
-    button,
-    done = [1, 2, 3, 4, 7, 9, 16, 21]
-
+    button
 
 document.addEventListener('mousedown', clicked)
 document.addEventListener('keydown', keyPressed)
