@@ -46,10 +46,10 @@ class Door {
     tagAktiv = this.id
 
     if (Door.hasVideo.includes(this.id)) {
-      let url = this.id ==  3 ? 'https://www.youtube-nocookie.com/embed/rEvnp_9DTYM' : 
-                this.id ==  4 ? 'https://www.youtube-nocookie.com/embed/DP_90vWFOLQ' : 
-                this.id == 16 ? 'https://www.youtube-nocookie.com/embed/yJa9mCt6Np0' :
-                this.id == 21 ? 'https://www.youtube-nocookie.com/embed/n3z3EeBDxkE' : undefined
+      let url = this.id ==  3 ? 'https://www.youtube-nocookie.com/embed/rEvnp_9DTYM?modestbranding=1' : 
+                this.id ==  4 ? 'https://www.youtube-nocookie.com/embed/DP_90vWFOLQ?modestbranding=1' : 
+                this.id == 16 ? 'https://www.youtube-nocookie.com/embed/yJa9mCt6Np0?modestbranding=1' :
+                this.id == 21 ? 'https://www.youtube-nocookie.com/embed/n3z3EeBDxkE?modestbranding=1' : undefined
       video.setAttribute('src', url)
       video.style.display = 'block'
       button.style.display = 'block'
