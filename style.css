@@ -29,9 +29,9 @@ h2 {
 .video {
   display: none;
   width: 800px;
-  height: 600px;
+  height: 610px;
   position: fixed;
-  top: 42%;
+  top: 43%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
