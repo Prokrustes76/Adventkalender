@@ -6,13 +6,14 @@ body {
 }
 
 h1 {
-  font-size: 4em;
-  margin: 0px 0px .2em 0px;
+  font-size: 7vh;
+  padding: 0px;
+  margin: 0px;
 }
 
 h2 {
-  font-size: 3em;
-  margin: 0px 0px .2em 0px;
+  font-size: 4vh;
+  margin: 0px;
 }
 
 #wrapper {

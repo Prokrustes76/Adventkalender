@@ -68,7 +68,7 @@ function show() {
   if (tagAktiv != -1 && !currentVideo) {    
     if  (!Door.noContent.includes(tagAktiv))
       audios[0].play()
-    let bigger = [...Door.noContent,...[1]].includes(tagAktiv)
+    let bigger = [...Door.noContent,...[1, 9]].includes(tagAktiv)
     let i = 0
     let interval = setInterval(_ => {
       let anzahl = bigger ? 160 : 100    // Tag 1 & noContent, stärkerer
@@ -95,14 +95,13 @@ function show() {
 function showContent() {
   if (currentAudio)
     currentAudio.play()
-  if (tagAktiv == 1)
-    extraMessage.style.display = 'block'
-  if (Door.noContent.includes(tagAktiv)) {
-    extraMessage.style.display = 'block'
-    extraMessage.innerHTML = '<h2>Heute ruhe ich mich aus!<h2>'
-    extraMessage.style.color = 'silver'
-  }
 
+  extraMessage.style.display = [...Door.noContent,...[1]].includes(tagAktiv) ? 'block' : 'none'
+
+  extraMessage.innerHTML = tagAktiv == 1 ? '<h1>Morgen gibt es eine Kostprobe!<h1>' : 
+                           Door.noContent.includes(tagAktiv) ? '<h2>Heute ruhe ich mich aus.<h2>' : undefined
+
+  extraMessage.style.color = tagAktiv == 1 ? 'red' : Door.noContent.includes(tagAktiv) ? 'silver' : undefined
 }
 
 function rect(x, y, w, h, col) {
