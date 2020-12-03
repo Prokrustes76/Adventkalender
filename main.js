@@ -98,7 +98,7 @@ function showContent() {
 
   extraMessage.style.display = [...Door.noContent,...[1]].includes(tagAktiv) ? 'block' : 'none'
 
-  extraMessage.innerHTML = tagAktiv == 1 ? '<h1>Morgen gibt es eine Kostprobe!<h1>' : 
+  extraMessage.innerHTML = tagAktiv == 1 ? '<h2>Morgen gibt es eine Kostprobe!<h2>' : 
                            Door.noContent.includes(tagAktiv) ? '<h2>Heute ruhe ich mich aus.<h2>' : undefined
 
   extraMessage.style.color = tagAktiv == 1 ? 'red' : Door.noContent.includes(tagAktiv) ? 'silver' : undefined
