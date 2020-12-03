@@ -3,6 +3,7 @@ body {
   margin: 0px;
   padding: 0px;
   background: black;
+  position: absolute;
 }
 
 h1 {
@@ -19,19 +20,19 @@ h2 {
 #wrapper {
   text-align: center;
   width: 800px;
-  height: 650px;
+  height: 600px;
   max-height: 70vh;
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .video {
   display: none;
-  max-height: 60vh;
+  max-height: 72vh;
   position: fixed;
-  top: 48%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
