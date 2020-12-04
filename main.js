@@ -66,9 +66,9 @@ function show() {
   ctx.drawImage(images[0], 0 , 0)
 
   if (tagAktiv != -1 && !currentVideo) {    
-    if  (!Door.noContent.includes(tagAktiv))
+    if  (![5, 6].includes(tagAktiv % 7))  // Wochenende 
       audios[0].play()
-    let bigger = [...Door.noContent,...[1, 9]].includes(tagAktiv)
+    let bigger = Door.noContent.includes(tagAktiv) || doors.some(d => d.id == tagAktiv && d.bigger)
     let i = 0
     let interval = setInterval(_ => {
       let anzahl = bigger ? 160 : 100    // Tag 1 & noContent, stärkerer
@@ -78,12 +78,12 @@ function show() {
       let w = 8 * i
       let h = 5.26 * i
  
-    rect(width/2 - w/2, height/2 - h/2, w, h, Door.noContent.includes(tagAktiv) ? 'black' : 'white')
+    rect(width/2 - w/2, height/2 - h/2, w, h, doors.some(d => d.id == tagAktiv && d.noFrame) ? 'black' : 'white')
     if (currentImage) {
       let hoehe = bigger ? h / 3 : h / 3.5   // wegen Rezepte (s.o.)
       ctx.drawImage(currentImage, width/2 - w/3, height/2 - hoehe, w*.6667, h*.6667)
     }
-    if (((bigger && i < 150) || i < 110) && !Door.noContent.includes(tagAktiv))
+    if (((bigger && i < 150) || i < 110) && !doors.some(d => d.id == tagAktiv && d.noFrame))
     ctx.drawImage(images[1], width/2 - w/2, height/2 - h/2, w, h)
     i++
     if (i > 99)
@@ -96,12 +96,13 @@ function showContent() {
   if (currentAudio)
     currentAudio.play()
 
-  extraMessage.style.display = [...Door.noContent,...[1]].includes(tagAktiv) ? 'block' : 'none'
+  extraMessage.style.display = [...Door.noContent,...[1, 5]].includes(tagAktiv) ? 'block' : 'none'
 
   extraMessage.innerHTML = tagAktiv == 1 ? '<h2>Morgen gibt es eine Kostprobe!<h2>' : 
+                           tagAktiv == 5 ? "<h2>Bird's Prelude von Henry Purcell</h2>" :
                            Door.noContent.includes(tagAktiv) ? '<h2>Heute ruhe ich mich aus.<h2>' : undefined
 
-  extraMessage.style.color = tagAktiv == 1 ? 'red' : Door.noContent.includes(tagAktiv) ? 'silver' : undefined
+  extraMessage.style.color = tagAktiv == 1 ? 'red' : 'silver'
 }
 
 function rect(x, y, w, h, col) {
