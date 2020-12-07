@@ -6,12 +6,12 @@ class Door {
                     4,  5,  6,  7,  8,  9][i]
     this.audio    = this.getAudio() || undefined
     this.image    = this.getImage() || undefined
-    this.bigger   = [1, 5, 9].includes(this.id)
-    this.noFrame  = [5, 6, 12, 13, 19, 20].includes(this.id)
+    this.bigger   = [1, 5, 8, 9].includes(this.id)
+    this.noFrame  = [5, 6, 11, 12, 13, 19, 20].includes(this.id)
   }
 
-  static hasVideo = [3, 4, 7, 16, 21]
-  static done = [1, 2, 3, 4, 5, 7, 9, 10, 16, 21]
+  static hasVideo = [3, 4, 7, 11, 16, 21]
+  static done = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 16, 21]
   static noContent = [6, 12, 13, 19, 20]
 
   getAudio() {      
@@ -25,7 +25,7 @@ class Door {
   }
 
   getImage() {
-    if (![...Door.noContent,...[1, 2, 5, 9, 10]].includes(this.id))
+    if (![...Door.noContent,...[1, 2, 5, 8, 9, 10]].includes(this.id))
       return
     let image = new Image()
     image.src = Door.noContent.includes(this.id) ? 
@@ -57,6 +57,7 @@ class Door {
       let url = this.id ==  3 ? 'https://www.youtube-nocookie.com/embed/WCfIiaaYtKA?modestbranding=1' :
                 this.id ==  7 ? 'https://www.youtube-nocookie.com/embed/rEvnp_9DTYM?modestbranding=1' : 
                 this.id ==  4 ? 'https://www.youtube-nocookie.com/embed/DP_90vWFOLQ?modestbranding=1' :    
+                this.id == 11 ? 'https://www.youtube-nocookie.com/embed/B2zp7Eo1zEE?modestbranding=1' :    
                 this.id == 16 ? 'https://www.youtube-nocookie.com/embed/yJa9mCt6Np0?modestbranding=1' :
                 this.id == 21 ? 'https://www.youtube-nocookie.com/embed/n3z3EeBDxkE?modestbranding=1' : undefined
       video.setAttribute('src', url)

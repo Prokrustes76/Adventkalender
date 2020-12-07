@@ -71,7 +71,7 @@ function show() {
     let bigger = Door.noContent.includes(tagAktiv) || doors.some(d => d.id == tagAktiv && d.bigger)
     let i = 0
     let interval = setInterval(_ => {
-      let anzahl = bigger ? 160 : 100    // Tag 1 & noContent, stärkerer
+      let anzahl = bigger ? 150 : 100    // Tag 1 & noContent, stärkerer
       if (i >= anzahl)                   // Zoom erforderlich
         clearInterval(interval)   
 
