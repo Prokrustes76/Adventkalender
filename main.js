@@ -96,13 +96,15 @@ function showContent() {
   if (currentAudio)
     currentAudio.play()
 
-  extraMessage.style.display = [...Door.noContent,...[1, 5]].includes(tagAktiv) ? 'block' : 'none'
+  extraMessage.style.display = [...Door.noContent,...[1, 5, 8, 10]].includes(tagAktiv) ? 'block' : 'none'
 
-  extraMessage.innerHTML = tagAktiv == 1 ? '<h2>Morgen gibt es eine Kostprobe!<h2>' : 
-                           tagAktiv == 5 ? "<h2>Bird's Prelude von Henry Purcell</h2>" :
+  extraMessage.innerHTML = tagAktiv ==  1 ? '<h2>Morgen gibt es eine Kostprobe!<h2>' : 
+                           tagAktiv ==  5 ? "<h2>Bird's Prelude von Henry Purcell</h2>" :
+                           tagAktiv ==  8 ? '<h2>Plätzchen haben nur wenig Vitamine - deshalb muss man ganz viel davon essen!<h2>' :
+                           tagAktiv == 10 ? '<h2>Verlosung: Zwei Weihnachtsmänner, bzw. -erdogans</h2>' :
                            Door.noContent.includes(tagAktiv) ? '<h2>Heute ruhe ich mich aus.<h2>' : undefined
 
-  extraMessage.style.color = tagAktiv == 1 ? 'red' : 'silver'
+  extraMessage.style.color = [1, 10].includes(tagAktiv) ? 'red' : 'silver'
 }
 
 function rect(x, y, w, h, col) {
