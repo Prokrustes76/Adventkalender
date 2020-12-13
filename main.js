@@ -69,6 +69,7 @@ function show() {
     showContent()
     return
   }
+
   ctx.drawImage(images[0], 0 , 0)
 
   if (tagAktiv != -1 && !currentVideo) {    
@@ -127,12 +128,14 @@ function snowFalling() {
     for (let i = 0; i < 200; i++) {
       snowflakes.push({x: Math.random() * 780 + 10,
                        y: Math.random() * -800,
-                       r: Math.random() * 6 + 1,})
+                       r: Math.random() * 4 + 1,})
     }
   }
-
+  let dark = 0
   setInterval(function() {
     ctx.drawImage(doors[5].image, 0, 0, 800, 526)
+    dark += (1 - dark) * 0.0008
+    rect(0, 0, 800, 526, `rgba(0, 0, 0, ${dark})`)
     for (let s of snowflakes) {
       s.y += s.r / 3
       if (s.y > 526)
