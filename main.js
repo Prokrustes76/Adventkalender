@@ -14,7 +14,8 @@ let Tag    = new Date().getDate(),
     images = [],
     audios = [],
     video,
-    button
+    button,
+    snowflakes = []
 
 document.addEventListener('mousedown', clicked)
 document.addEventListener('keydown', keyPressed)
@@ -63,6 +64,11 @@ function loadImages(i = 0) {
 }
 
 function show() {
+  if (tagAktiv == 14) {
+    snowFalling()
+    showContent()
+    return
+  }
   ctx.drawImage(images[0], 0 , 0)
 
   if (tagAktiv != -1 && !currentVideo) {    
@@ -90,11 +96,14 @@ function show() {
       showContent()
     }, 17)
   }    
+  
 }
 
 function showContent() {
   if (currentAudio)
     currentAudio.play()
+
+  if (tagAktiv == 14) {}
 
   extraMessage.style.display = [...Door.noContent,...[1, 5, 8, 10]].includes(tagAktiv) ? 'block' : 'none'
 
@@ -110,6 +119,31 @@ function showContent() {
 function rect(x, y, w, h, col) {
   ctx.fillStyle = col
   ctx.fillRect(x, y, w, h)
+}
+
+
+function snowFalling() {
+  if (snowflakes.length == 0) {
+    for (let i = 0; i < 200; i++) {
+      snowflakes.push({x: Math.random() * 780 + 10,
+                       y: Math.random() * -800,
+                       r: Math.random() * 6 + 1,})
+    }
+  }
+
+  setInterval(function() {
+    ctx.drawImage(doors[5].image, 0, 0, 800, 526)
+    for (let s of snowflakes) {
+      s.y += s.r / 3
+      if (s.y > 526)
+        s.y = -10
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'
+      ctx.beginPath()
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
+      ctx.fill()
+    }
+  }, 20)
+
 }
 
 function clicked(event) {
