@@ -55,6 +55,9 @@ function loadAudios(i = 0) {
 } 
 
 function loadImages(i = 0) {
+  images[2] = new Image()
+  images[2].src = './rsc/Jpg30.jpg'
+
   images[1] = new Image()
   images[1].src = './rsc/Rahmen.png'
 
@@ -64,9 +67,8 @@ function loadImages(i = 0) {
 }
 
 function show() {
-  if (tagAktiv == 14) {
-    snowFalling()
-    showContent()
+  if (tagAktiv == 14 || tagAktiv == 15) {
+    special()
     return
   }
 
@@ -97,7 +99,6 @@ function show() {
       showContent()
     }, 17)
   }    
-  
 }
 
 function showContent() {
@@ -122,6 +123,26 @@ function rect(x, y, w, h, col) {
   ctx.fillRect(x, y, w, h)
 }
 
+function special() {
+  if (tagAktiv == 14) 
+    snowFalling()
+  else  
+    rotation()
+
+  showContent()
+}
+
+function rotation() {
+  rect(0, 0, 800, 526, 'black')
+  ctx.drawImage(doors[6].image, 13, 13)
+  let i = 0
+  setInterval(function() {
+    i += .3
+    ctx.drawImage(images[2], i, 0, 387, 500, 400, 13, 387, 500)
+    write('Kleine Kinder, große Kinder', 595, 100, 32, 'green')
+    write('(schon wieder Zuckowski!!!)', 595, 150, 26, 'chartreuse')
+  }, 10)
+}
 
 function snowFalling() {
   if (snowflakes.length == 0) {
@@ -146,7 +167,6 @@ function snowFalling() {
       ctx.fill()
     }
   }, 20)
-
 }
 
 function clicked(event) {
@@ -164,4 +184,11 @@ function clicked(event) {
 
 function zurueck() {
   doors[tagAktiv - 1].close()
+}
+
+function write(text, x, y, size, col, align = 'center') {
+  ctx.textAlign = align
+  ctx.fillStyle = col
+  ctx.font = `${size}px Mountains of Christmas`
+  ctx.fillText(text, x, y)
 }

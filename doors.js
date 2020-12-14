@@ -6,16 +6,16 @@ class Door {
                     4,  5,  6,  7,  8,  9][i]
     this.audio    = this.getAudio() || undefined
     this.image    = this.getImage() || undefined
-    this.bigger   = [1, 5, 8, 9, 14].includes(this.id)
-    this.noFrame  = [5, 6, 11, 12, 13, 14, 19, 20].includes(this.id)
+    this.bigger   = [1, 5, 8, 9, 14, 15].includes(this.id)
+    this.noFrame  = [5, 6, 11, 12, 13, 14, 15, 19, 20].includes(this.id)
   }
 
   static hasVideo = [3, 4, 7, 11, 16, 21]
-  static done = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 14, 16, 21]
+  static done = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 16, 21]
   static noContent = [6, 12, 13, 19, 20]
 
   getAudio() {      
-    if (![...Door.noContent,...[1, 2, 5, 8, 9, 10, 14]].includes(this.id))
+    if (![...Door.noContent,...[1, 2, 5, 8, 9, 10, 14, 15]].includes(this.id))
       return
     let audio = new Audio()
     audio.src = Door.noContent.includes(this.id) ? 
@@ -25,7 +25,7 @@ class Door {
   }
 
   getImage() {
-    if (![...Door.noContent,...[1, 2, 5, 8, 9, 10, 14]].includes(this.id))
+    if (![...Door.noContent,...[1, 2, 5, 8, 9, 10, 14, 15]].includes(this.id))
       return
     let image = new Image()
     image.src = Door.noContent.includes(this.id) ? 
