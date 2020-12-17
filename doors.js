@@ -10,8 +10,8 @@ class Door {
     this.noFrame  = [5, 6, 11, 12, 13, 14, 15, 19, 20].includes(this.id)
   }
 
-  static hasVideo = [3, 4, 7, 11, 16, 17, 21]
-  static done = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 16, 17, 21]
+  static hasVideo = [3, 4, 7, 11, 16, 17, 18, 21]
+  static done = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 21]
   static noContent = [6, 12, 13, 19, 20]
 
   getAudio() {      
@@ -60,7 +60,7 @@ class Door {
                 this.id == 11 ? 'https://www.youtube-nocookie.com/embed/B2zp7Eo1zEE?modestbranding=1' :    
                 this.id == 16 ? 'https://www.youtube-nocookie.com/embed/n3z3EeBDxkE?modestbranding=1' : 
                 this.id == 17 ? 'https://www.youtube-nocookie.com/embed/4AKIq_Yj1EY?modestbranding=1' : 
-                this.id == 21 ? 'https://www.youtube-nocookie.com/embed/yJa9mCt6Np0?modestbranding=1' : undefined
+                this.id == 18 ? 'https://www.youtube-nocookie.com/embed/yJa9mCt6Np0?modestbranding=1' : undefined
       video.setAttribute('src', url)
       video.style.display = 'block'
       button.style.display = 'block'
