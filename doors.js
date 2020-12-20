@@ -60,7 +60,8 @@ class Door {
                 this.id == 11 ? 'https://www.youtube-nocookie.com/embed/B2zp7Eo1zEE?modestbranding=1' :    
                 this.id == 16 ? 'https://www.youtube-nocookie.com/embed/n3z3EeBDxkE?modestbranding=1' : 
                 this.id == 17 ? 'https://www.youtube-nocookie.com/embed/4AKIq_Yj1EY?modestbranding=1' : 
-                this.id == 18 ? 'https://www.youtube-nocookie.com/embed/yJa9mCt6Np0?modestbranding=1' : undefined
+                this.id == 18 ? 'https://www.youtube-nocookie.com/embed/yJa9mCt6Np0?modestbranding=1' : 
+                this.id == 21 ? 'https://www.youtube-nocookie.com/embed/ORthzIOEf30?modestbranding=1' : undefined
       video.setAttribute('src', url)
       video.style.display = 'block'
       button.style.display = 'block'
