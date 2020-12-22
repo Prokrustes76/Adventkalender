@@ -12,7 +12,7 @@ class Door {
 
   static hasVideo = [3, 4, 7, 11, 16, 17, 18, 21, 22, 23]
   static done = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 21, 22, 23]
-  static noContent = [6, 12, 13, 19, 20, 23, 24]
+  static noContent = [6, 12, 13, 19, 20, 24]
 
   getAudio() {      
     if (![...Door.noContent,...[1, 2, 5, 8, 9, 10, 14, 15]].includes(this.id))
